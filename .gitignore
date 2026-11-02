@@ -31,7 +31,10 @@ build/
 
 ### VS Code ###
 .vscode/
+<<<<<<< HEAD
 
 # Base de datos local H2
 /data/
 
+=======
+>>>>>>> f3969afa4ec195ac8a59e0d5f2df7183d97f481b

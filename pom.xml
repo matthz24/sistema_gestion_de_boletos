@@ -28,6 +28,7 @@
     </scm>
     <properties>
         <java.version>21</java.version>
+<<<<<<< HEAD
         <lombok.version>1.18.48</lombok.version>
     </properties>
     <dependencies>
@@ -38,6 +39,11 @@
             <optional>true</optional>
         </dependency>
         <dependency>
+=======
+    </properties>
+    <dependencies>
+        <dependency>
+>>>>>>> f3969afa4ec195ac8a59e0d5f2df7183d97f481b
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
@@ -45,6 +51,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webmvc</artifactId>
         </dependency>
+<<<<<<< HEAD
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -58,6 +65,8 @@
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
         </dependency>
+=======
+>>>>>>> f3969afa4ec195ac8a59e0d5f2df7183d97f481b
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -66,6 +75,14 @@
             <optional>true</optional>
         </dependency>
         <dependency>
+<<<<<<< HEAD
+=======
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+>>>>>>> f3969afa4ec195ac8a59e0d5f2df7183d97f481b
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf-test</artifactId>
             <scope>test</scope>
@@ -81,6 +98,7 @@
         <finalName>app</finalName>
         <plugins>
             <plugin>
+<<<<<<< HEAD
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
@@ -97,6 +115,47 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+=======
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>default-compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <configuration>
+                            <annotationProcessorPaths>
+                                <path>
+                                    <groupId>org.projectlombok</groupId>
+                                    <artifactId>lombok</artifactId>
+                                </path>
+                            </annotationProcessorPaths>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>default-testCompile</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>testCompile</goal>
+                        </goals>
+                        <configuration>
+                            <annotationProcessorPaths>
+                                <path>
+                                    <groupId>org.projectlombok</groupId>
+                                    <artifactId>lombok</artifactId>
+                                </path>
+                            </annotationProcessorPaths>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+>>>>>>> f3969afa4ec195ac8a59e0d5f2df7183d97f481b
         </plugins>
     </build>
 
