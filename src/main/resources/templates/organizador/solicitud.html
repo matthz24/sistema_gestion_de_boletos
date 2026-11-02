@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{general/fragmentos :: head('Solicitar registro | EvenTicket')}"></head>
+<body>
+<section class="organizador-layout">
+  <header th:replace="~{general/fragmentos :: headerPublico}"></header>
+
+  <aside th:replace="~{organizador/fragmentos :: panelOrganizador}"></aside>
+
+  <main class="solicitud-main">
+    <div class="solicitud-contenido">
+      <div class="encabezado-solicitud">
+        <div>
+          <h1>Solicitud de organizador</h1>
+          <p>Recibimos la información de tu organización. La cuenta se habilitará después de la aprobación del administrador.</p>
+        </div>
+        <span class="estado estado-pendiente" th:if="${aviso}">SOLICITUD PENDIENTE</span>
+      </div>
+
+      <div th:replace="~{general/fragmentos :: mostrarMensajes}"></div>
+
+      <div class="solicitud-columnas">
+        <section th:replace="~{organizador/fragmentos :: formularioSolicitud(${solicitud})}"></section>
+        <aside th:replace="~{organizador/fragmentos :: estadoSolicitud(${aviso})}"></aside>
+      </div>
+    </div>
+  </main>
+</section>
+</body>
+</html>

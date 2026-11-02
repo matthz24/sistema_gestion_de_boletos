@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{general/fragmentos :: head('Solicitudes pendientes | EvenTicket')}"></head>
+<body>
+<div class="admin-layout">
+  <aside th:replace="~{organizador/fragmentos :: menuAdmin}"></aside>
+
+  <main class="admin-main">
+    <header class="barra-superior">
+      <span>Organizadores</span>
+      <a th:href="@{/organizador/solicitud}">Vista previa del sitio</a>
+      <span class="avatar avatar-pequeno">A</span>
+    </header>
+    <div class="admin-contenido">
+      <div class="titulo-admin">
+        <div>
+          <h1>Solicitudes de organizador</h1>
+          <p>Revisa la información del negocio antes de habilitar la publicación de eventos.</p>
+        </div>
+        <span class="contador-abiertas" th:text="|${pendientesCount} SOLICITUDES ABIERTAS|">0 SOLICITUDES ABIERTAS</span>
+      </div>
+
+      <div th:replace="~{general/fragmentos :: mostrarMensajes}"></div>
+
+      <section th:replace="~{organizador/fragmentos :: resumenAdmin(${pendientesCount}, ${aprobadasCount}, ${rechazadasCount})}"></section>
+      <section th:replace="~{organizador/fragmentos :: tablaPendientes(${solicitudes})}"></section>
+    </div>
+  </main>
+</div>
+<script th:src="@{/js/modulos/organizador.js}"></script>
+</body>
+</html>

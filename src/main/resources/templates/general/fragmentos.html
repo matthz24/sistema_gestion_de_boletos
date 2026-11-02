@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<body>
+<!-- Fragmento #1: encabezado común que reciben las páginas. -->
+<head th:fragment="head(titulo)">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title th:text="${titulo}">EvenTicket</title>
+  <link rel="stylesheet" th:href="@{/css/organizador.css}">
+</head>
+
+<!-- Marca compartida por las páginas públicas y administrativas. -->
+<a th:fragment="marca(clase)" th:class="|marca ${clase}|" th:href="@{/}">
+  <span class="marca-icono">E</span> EvenTicket
+</a>
+
+<!-- Fragmento #2: barra superior del formulario público. -->
+<header th:fragment="headerPublico" class="organizador-topbar">
+  <a th:replace="~{general/fragmentos :: marca('')}"></a>
+</header>
+
+<!-- Fragmento #3: mensajes luego de enviar o revisar una solicitud. -->
+<section th:fragment="mostrarMensajes">
+  <div class="aviso aviso-exito" th:if="${aviso}" th:text="${aviso}"></div>
+  <div class="aviso aviso-error" th:if="${error}" th:text="${error}"></div>
+</section>
+</body>
+</html>
