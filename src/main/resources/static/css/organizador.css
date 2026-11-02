@@ -1,0 +1,189 @@
+:root {
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+  color: #20263d;
+  background: #f7f8fc;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; }
+a { color: inherit; text-decoration: none; }
+button, input, textarea { font: inherit; }
+.inicio-layout { max-width: 760px; margin: 10vh auto; padding: 44px; border: 1px solid #e3e7f0; border-radius: 16px; background: #fff; box-shadow: 0 15px 45px #20294f0d; }
+.inicio-layout .etiqueta-superior { display: block; margin-top: 62px; }
+.inicio-layout h1 { max-width: 520px; margin: 15px 0 10px; font-size: clamp(30px, 5vw, 48px); line-height: 1.1; letter-spacing: -1.5px; }
+.inicio-layout > p { color: #7c859c; font-size: 14px; }
+.inicio-acciones { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+.inicio-acciones .boton { min-height: 40px; padding: 0 18px; font-size: 11px; }
+
+/* Formulario de solicitud pública */
+.organizador-layout { min-height: 100vh; display: grid; grid-template-columns: minmax(290px, 29.4%) 1fr; grid-template-rows: 56px 1fr; background: #fff; }
+.organizador-topbar { grid-column: 1 / -1; display: flex; align-items: center; padding: 0 36px; background: #fff; }
+.promo-organizador { grid-column: 1; grid-row: 2; background: #f0edff; padding: 24px 34px; display: flex; flex-direction: column; justify-content: space-between; min-height: calc(100vh - 56px); }
+.marca { display: inline-flex; align-items: center; gap: 9px; width: fit-content; font-size: 18px; font-weight: 750; letter-spacing: -.4px; }
+.marca-icono { width: 27px; height: 27px; border-radius: 50%; display: inline-grid; place-items: center; background: #635cf0; color: #fff; font-size: 15px; font-weight: 700; }
+.marca-clara { color: #fff; }
+.promo-contenido { max-width: 350px; margin: auto 0; padding: 50px 0; }
+.etiqueta-superior { color: #6258eb; font-size: 9px; font-weight: 700; letter-spacing: .08em; }
+.promo-contenido h1 { margin: 26px 0 16px; font-size: clamp(28px, 3vw, 38px); line-height: 1.16; letter-spacing: -1.2px; }
+.promo-contenido > p { color: #747c97; font-size: 14px; line-height: 1.55; max-width: 315px; }
+.como-funciona { margin-top: 54px; padding: 22px 20px; border: 1px solid #e6e2f4; border-radius: 14px; background: #fff; }
+.como-funciona h2 { font-size: 14px; margin: 0 0 16px; }
+.como-funciona ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+.como-funciona li { display: flex; align-items: center; gap: 10px; font-size: 11px; color: #30364b; }
+.como-funciona li span { width: 23px; height: 23px; border-radius: 50%; display: grid; place-items: center; background: #f0efff; color: #6258eb; font-size: 9px; font-weight: 700; }
+.pie-promo { color: #707995; font-size: 9px; font-weight: 600; }
+.solicitud-main { grid-column: 2; grid-row: 2; padding: 34px clamp(24px, 4vw, 68px); background: #fff; }
+.marca-movil { display: none; }
+.solicitud-contenido { max-width: 1000px; margin: 18px auto 0; }
+.encabezado-solicitud { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; margin-bottom: 26px; }
+.encabezado-solicitud h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: -.6px; }
+.encabezado-solicitud p { max-width: 660px; margin: 0; color: #828ba4; font-size: 12px; line-height: 1.5; }
+.solicitud-columnas { display: grid; grid-template-columns: minmax(0, 1fr) minmax(210px, 28%); gap: 20px; align-items: start; }
+.panel { border: 1px solid #e3e7f0; border-radius: 13px; background: #fff; }
+.formulario-panel { padding: 20px; }
+.formulario-panel h3, .estado-panel h3 { margin: 0 0 17px; font-size: 15px; }
+.formulario-panel form { display: grid; gap: 14px; }
+.formulario-panel label { display: grid; gap: 6px; color: #66718c; font-size: 10px; }
+.formulario-panel input:not([type=checkbox]), .formulario-panel textarea { width: 100%; height: 37px; padding: 0 11px; border: 1px solid #dfe4ee; border-radius: 8px; background: #fff; color: #293148; font-size: 11px; outline: none; }
+.formulario-panel input:focus, .formulario-panel textarea:focus, .form-rechazo textarea:focus { border-color: #7167f3; box-shadow: 0 0 0 3px #7167f31c; }
+.formulario-panel input::placeholder, .form-rechazo textarea::placeholder { color: #a1a9bc; }
+.campos-dobles { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; }
+.formulario-panel .confirmacion { display: flex; flex-direction: row; align-items: flex-start; gap: 9px; font-size: 10px; }
+.confirmacion input { margin: 1px 0 0; accent-color: #6258eb; }
+.boton { display: inline-flex; align-items: center; justify-content: center; min-height: 35px; padding: 0 14px; border: 1px solid transparent; border-radius: 8px; cursor: pointer; font-size: 10px; font-weight: 650; transition: filter .15s, transform .15s; }
+.boton:hover { filter: brightness(.97); transform: translateY(-1px); }
+.boton-principal { color: #fff; background: #6258eb; }
+.boton-ancho { width: 100%; margin-top: 2px; }
+.estado-panel { padding: 20px 18px; background: #fcfcfe; }
+.icono-estado, .icono-mini, .icono-modal { display: grid; place-items: center; border-radius: 50%; font-weight: 750; }
+.icono-estado { width: 34px; height: 34px; margin-bottom: 14px; background: #fff2d8; color: #c57c03; }
+.icono-estado.icono-ok { background: #e1f7eb; color: #16865e; }
+.estado-panel h3 { margin-bottom: 7px; font-size: 14px; }
+.estado-panel p { color: #818aa2; font-size: 10px; line-height: 1.55; }
+.estado-panel hr { border: 0; border-top: 1px solid #e6e8ef; margin: 24px 0 18px; }
+.sobrelinea { display: block; margin-bottom: 9px; color: #8c94a8; font-size: 8px; font-weight: 700; letter-spacing: .04em; }
+.estado { display: inline-flex; align-items: center; justify-content: center; min-width: 92px; min-height: 23px; padding: 4px 12px; border-radius: 999px; font-size: 9px; font-weight: 650; }
+.estado-pendiente { color: #b66d00; background: #fff4d9; }
+.estado-panel h4 { margin: 18px 0 6px; font-size: 10px; }
+.nota-tiempo { margin-top: 38px; padding: 14px; border-radius: 10px; color: #ad6800; background: #fff4d9; font-size: 9px; line-height: 1.55; }
+.enlace-admin { display: inline-block; margin-top: 18px; color: #6258eb; font-size: 10px; }
+.error { display: block; color: #bd3445; font-size: 10px; }
+.aviso { margin: 0 0 16px; padding: 11px 13px; border-radius: 8px; font-size: 12px; }
+.aviso-exito { color: #16815c; background: #e2f7eb; }
+.aviso-error { color: #b62c3f; background: #fff0f1; }
+.encabezado-solicitud > .estado { margin-top: 3px; }
+
+/* Vista administrativa de solicitudes */
+.admin-layout { min-height: 100vh; display: grid; grid-template-columns: 208px minmax(0, 1fr); background: #f7f8fc; }
+.barra-lateral { position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; padding: 18px 14px 16px; color: #d9def5; background: #20294f; }
+.barra-lateral .marca { margin: 0 10px 24px; font-size: 16px; }
+.rol-admin { margin: 0 10px 25px; color: #aab3d0; font-size: 8px; letter-spacing: .04em; }
+.navegacion-admin { display: grid; gap: 5px; }
+.navegacion-admin a { display: flex; align-items: center; gap: 10px; min-height: 31px; padding: 0 12px; border-radius: 8px; color: #cad0e3; font-size: 10px; }
+.navegacion-admin .nav-inactivo { display: flex; align-items: center; gap: 10px; min-height: 31px; padding: 0 12px; color: #cad0e3; font-size: 10px; opacity: .85; }
+.navegacion-admin .nav-inactivo span { width: 10px; font-size: 11px; }
+.navegacion-admin a span { width: 10px; font-size: 11px; }
+.navegacion-admin a.activo { color: #fff; background: #414e82; font-weight: 700; }
+.usuario-admin { display: flex; align-items: center; gap: 9px; margin: auto 0 0; padding: 14px 10px 0; border-top: 1px solid #586184; font-size: 9px; }
+.usuario-admin strong, .usuario-admin small { display: block; }
+.usuario-admin small { margin-top: 3px; color: #aab3d0; }
+.avatar { width: 28px; height: 28px; display: grid; place-items: center; flex: 0 0 auto; border-radius: 50%; color: #35416d; background: #c5c9ef; font-size: 10px; font-weight: 700; }
+.admin-main { min-width: 0; }
+.barra-superior { height: 48px; display: flex; align-items: center; gap: 14px; padding: 0 28px; background: #fff; font-size: 10px; font-weight: 650; }
+.barra-superior a { margin-left: auto; color: #8c94a9; font-size: 9px; font-weight: 400; }
+.avatar-pequeno { width: 24px; height: 24px; }
+.admin-contenido { max-width: 1500px; margin: 0 auto; padding: 27px 30px 35px; }
+.titulo-admin { display: flex; align-items: end; justify-content: space-between; gap: 18px; margin-bottom: 20px; }
+.titulo-admin h1 { margin: 0 0 6px; font-size: 23px; letter-spacing: -.55px; }
+.titulo-admin p, .encabezado-tabla p { margin: 0; color: #858da4; font-size: 10px; }
+.contador-abiertas { display: inline-flex; align-items: center; min-height: 24px; padding: 0 16px; border-radius: 999px; color: #a86700; background: #fff3d8; font-size: 8px; font-weight: 700; white-space: nowrap; }
+.tarjetas-resumen { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-bottom: 17px; }
+.tarjeta-resumen { position: relative; min-height: 95px; display: grid; grid-template-columns: 28px 1fr; grid-template-rows: 21px 28px 18px; column-gap: 10px; align-content: center; padding: 13px 16px; border: 1px solid #e3e7f0; border-radius: 12px; background: #fff; }
+.icono-mini { width: 26px; height: 26px; grid-row: 1 / 3; font-size: 10px; }
+.icono-ambar { color: #b87907; background: #fff2d8; }
+.icono-verde { color: #18885e; background: #e0f7eb; }
+.icono-rojo { color: #c9364a; background: #ffe9ec; }
+.tarjeta-resumen small { align-self: center; color: #828ba3; font-size: 9px; }
+.tarjeta-resumen strong { font-size: 21px; line-height: 1.2; }
+.tarjeta-resumen > span:last-child { grid-column: 2; color: #8991a6; font-size: 8px; }
+.tarjeta-resumen .texto-verde { color: #16845c !important; }
+.tabla-panel { overflow: hidden; padding: 16px 16px 0; }
+.encabezado-tabla { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 0 0 15px; }
+.encabezado-tabla h2 { margin: 0 0 5px; font-size: 14px; }
+.busqueda { width: min(260px, 38%); height: 32px; display: flex; align-items: center; gap: 7px; padding: 0 10px; border: 1px solid #e2e6ef; border-radius: 8px; color: #9aa2b5; background: #f8f9fc; font-size: 16px; }
+.busqueda input { width: 100%; border: 0; outline: 0; background: transparent; color: #28314a; font-size: 9px; }
+.tabla-scroll { overflow-x: auto; }
+table { width: 100%; min-width: 750px; border-collapse: collapse; }
+thead { background: #f4f6fb; }
+th { padding: 12px 10px; color: #7d869d; font-size: 8px; font-weight: 700; text-align: left; white-space: nowrap; }
+td { padding: 13px 10px; border-bottom: 1px solid #e7eaf1; color: #717b94; font-size: 9px; vertical-align: middle; }
+td:first-child { min-width: 200px; color: #27304a; }
+td:first-child strong, td:first-child small { display: block; }
+td:first-child strong { margin-bottom: 4px; font-size: 10px; }
+td:first-child small { margin-top: 3px; color: #8991a6; font-size: 8px; }
+.acciones-tabla { white-space: nowrap; }
+.acciones-tabla form { display: inline; }
+.acciones-tabla .boton { min-height: 29px; margin-right: 4px; padding: 0 11px; font-size: 8px; }
+.boton-aprobar { color: #fff; background: #138b62; }
+.boton-rechazar { color: #fff; background: #c93447; }
+.boton-secundario { border-color: #dfe4ed; color: #30384f; background: #fff; }
+.pie-tabla { display: flex; justify-content: space-between; gap: 12px; padding: 13px 1px; color: #8790a6; font-size: 8px; }
+.pie-tabla a, .vacio a { color: #6258eb; }
+.vacio { padding: 42px 16px; text-align: center; }
+.vacio > span { width: 36px; height: 36px; display: grid; place-items: center; margin: auto auto 12px; border-radius: 50%; color: #16845c; background: #e1f7eb; }
+.vacio h3 { margin: 0 0 6px; font-size: 14px; }
+.vacio p { margin: 0 0 13px; color: #828ba3; font-size: 10px; }
+.vacio a { font-size: 10px; }
+
+/* Diálogo de rechazo del prototipo */
+.modal-rechazo { width: min(490px, calc(100vw - 32px)); max-width: none; padding: 0; border: 0; border-radius: 14px; color: #20263d; box-shadow: 0 18px 70px #121a3540; }
+.modal-rechazo::backdrop { background: #1e2338a8; }
+.form-rechazo { padding: 24px 32px 28px; }
+.icono-modal { width: 38px; height: 38px; margin: 0 auto 14px; color: #d33a4e; background: #ffeaed; font-size: 20px; }
+.form-rechazo h2 { margin: 0 0 8px; font-size: 19px; }
+.form-rechazo > p { margin: 0 0 22px; color: #828ba3; font-size: 10px; }
+.form-rechazo > label { display: block; margin: 0 0 8px; font-size: 9px; font-weight: 700; }
+.form-rechazo textarea { width: 100%; min-height: 96px; resize: vertical; padding: 12px; border: 1px solid #dfe4ee; border-radius: 8px; outline: 0; background: #f9fafe; font-size: 10px; }
+.acciones-modal { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0 17px; }
+.acciones-modal .boton { min-height: 38px; }
+.form-rechazo > small { color: #828ba3; font-size: 9px; }
+
+@media (max-width: 900px) {
+  .organizador-layout { grid-template-columns: 250px 1fr; }
+  .promo-organizador { padding: 22px; }
+  .solicitud-main { padding: 26px 20px; }
+  .solicitud-columnas { grid-template-columns: 1fr; }
+  .estado-panel { display: none; }
+  .admin-layout { grid-template-columns: 175px minmax(0, 1fr); }
+  .barra-lateral { padding-left: 10px; padding-right: 10px; }
+  .admin-contenido { padding: 22px 18px; }
+}
+@media (max-width: 650px) {
+  .inicio-layout { margin: 24px 14px; padding: 26px; }
+  .organizador-layout { display: block; }
+  .organizador-topbar { height: 56px; padding: 0 20px; }
+  .promo-organizador { display: none; }
+  .solicitud-main { padding: 18px 14px 28px; }
+  .solicitud-contenido { margin-top: 0; }
+  .encabezado-solicitud { display: block; }
+  .encabezado-solicitud > .estado { margin-top: 13px; }
+  .encabezado-solicitud h2 { font-size: 21px; }
+  .campos-dobles { grid-template-columns: 1fr; }
+  .admin-layout { display: block; }
+  .barra-lateral { position: relative; width: 100%; height: auto; min-height: 0; padding: 12px 14px; }
+  .barra-lateral .marca { margin: 0; }
+  .rol-admin, .usuario-admin { display: none; }
+  .navegacion-admin { display: flex; overflow-x: auto; gap: 4px; margin-top: 12px; }
+  .navegacion-admin a { flex: 0 0 auto; padding: 0 9px; }
+  .barra-superior { display: none; }
+  .admin-contenido { padding: 22px 12px; }
+  .titulo-admin { display: block; }
+  .contador-abiertas { margin-top: 13px; }
+  .tarjetas-resumen { grid-template-columns: 1fr; gap: 8px; }
+  .tarjeta-resumen { min-height: 76px; }
+  .encabezado-tabla { align-items: flex-start; flex-direction: column; }
+  .busqueda { width: 100%; }
+  .acciones-modal { grid-template-columns: 1fr; }
+  .form-rechazo { padding: 22px; }
+}

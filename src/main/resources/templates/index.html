@@ -1,15 +1,16 @@
-<!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
-    <head>
-        <title>EvenTicket Plataforma de Venta de Tiquetes en Línea</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="~{general/fragmentos :: head('EvenTicket')}"></head>
     <body>
-        <h1>Proyecto Aplicaciones</h1>
+        <main class="inicio-layout">
+            <a th:replace="~{general/fragmentos :: marca('')}"></a>
+            <span class="etiqueta-superior">PLATAFORMA DE EVENTOS</span>
+            <h1>Lleva tus eventos a más personas.</h1>
+            <p>Publica experiencias, vende entradas y sigue tus resultados desde un solo lugar.</p>
+            <div class="inicio-acciones">
+                <a class="boton boton-principal" th:href="@{/organizador/solicitud}">Solicitud de cuenta organizadora</a>
+                <a class="boton boton-secundario" th:href="@{/admin/organizadores/pendientes}">Revisar solicitudes</a>
+            </div>
+        </main>
     </body>
 </html>

@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+    <body>
+
+        <!-- Fragmento del formulario que completa la persona organizadora. -->
+        <section th:fragment="formularioSolicitud(solicitud)" class="panel formulario-panel">
+            <h3>Datos de la organización</h3>
+            <form th:action="@{/organizador/solicitud}" th:object="${solicitud}" method="post">
+                <label>Nombre comercial
+                    <input th:field="*{nombreOrganizacion}" maxlength="120" required>
+                    <small class="error" th:errors="*{nombreOrganizacion}"></small>
+                </label>
+                <label>Nombre de la persona responsable
+                    <input th:field="*{nombreContacto}" maxlength="120" required>
+                    <small class="error" th:errors="*{nombreContacto}"></small>
+                </label>
+                <div class="campos-dobles">
+                    <label>Correo de contacto
+                        <input type="email" th:field="*{correo}" maxlength="160" required>
+                        <small class="error" th:errors="*{correo}"></small>
+                    </label>
+                    <label>Teléfono
+                        <input type="tel" th:field="*{telefono}" maxlength="30">
+                        <small class="error" th:errors="*{telefono}"></small>
+                    </label>
+                </div>
+                <label>Identificación legal / cédula
+                    <input th:field="*{identificacionLegal}" maxlength="40" required>
+                    <small class="error" th:errors="*{identificacionLegal}"></small>
+                </label>
+                <label>Sitio web o red social
+                    <input th:field="*{sitioWeb}" maxlength="180">
+                    <small class="error" th:errors="*{sitioWeb}"></small>
+                </label>
+                <label>Tipo de eventos que organizas
+                    <input th:field="*{tipoEventos}" maxlength="180" required>
+                    <small class="error" th:errors="*{tipoEventos}"></small>
+                </label>
+                <label class="confirmacion">
+                    <input type="checkbox" th:field="*{informacionCorrecta}" required>
+                    <span>Confirmo que la información de la organización es correcta.</span>
+                </label>
+                <small class="error" th:errors="*{informacionCorrecta}"></small>
+                <button class="boton boton-principal boton-ancho" type="submit">Enviar solicitud</button>
+            </form>
+        </section>
+
+        <!-- Fragmento reutilizable para explicar el proceso de registro. -->
+        <aside th:fragment="panelOrganizador" class="promo-organizador">
+            <div class="promo-contenido">
+                <span class="etiqueta-superior">CUENTA ORGANIZADORA</span>
+                <h1>Lleva tus eventos<br>a más personas.</h1>
+                <p>Publica experiencias, vende entradas y sigue tus resultados desde un solo lugar.</p>
+                <section class="como-funciona">
+                    <h2>Cómo funciona</h2>
+                    <ol>
+                        <li><span>01</span> Completa tu perfil</li>
+                        <li><span>02</span> El equipo revisa tu solicitud</li>
+                        <li><span>03</span> Crea eventos al aprobarse</li>
+                    </ol>
+                </section>
+            </div>
+            <small class="pie-promo">EVENTICKET · PLATAFORMA DE EVENTOS</small>
+        </aside>
+
+        <!-- Fragmento parametrizado que cambia según se haya enviado el formulario. -->
+        <aside th:fragment="estadoSolicitud(aviso)" class="panel estado-panel">
+            <div class="icono-estado" th:classappend="${aviso} ? ' icono-ok' : ''" th:text="${aviso} ? '✓' : '…'">…</div>
+            <h3 th:text="${aviso} ? 'Tu solicitud está en revisión' : 'Envía tu solicitud para revisión'">Envía tu solicitud para revisión</h3>
+            <p>El equipo administrador revisará los datos de tu organización. Te avisaremos por correo cuando haya una decisión.</p>
+            <hr>
+            <small class="sobrelinea">ESTADO DE LA SOLICITUD</small>
+            <span class="estado estado-pendiente" th:text="${aviso} ? 'Pendiente' : 'Por enviar'">Por enviar</span>
+            <h4 th:text="${aviso} ? 'Mientras tanto' : '¿Qué sigue?'"></h4>
+            <p th:text="${aviso} ? 'Tu perfil organizador quedará habilitado al recibir aprobación.' : 'Completa todos los datos. El administrador revisará la información antes de habilitar tu perfil.'"></p>
+            <div class="nota-tiempo">La solicitud se valida manualmente por el equipo de EvenTicket.</div>
+            <a class="enlace-admin" th:href="@{/admin/organizadores/pendientes}">Ir a administración de solicitudes →</a>
+        </aside>
+
+        <!-- Menú lateral para la pantalla administrativa. -->
+        <aside th:fragment="menuAdmin" class="barra-lateral">
+            <a th:replace="~{general/fragmentos :: marca('marca-clara')}"></a>
+            <small class="rol-admin">ADMINISTRACIÓN</small>
+            <nav class="navegacion-admin" aria-label="Navegación de administración">
+                <a th:href="@{/}"><span>○</span> Resumen</a>
+                <a class="activo" th:href="@{/admin/organizadores/pendientes}"><span>●</span> Organizadores</a>
+                <span class="nav-inactivo"><span>○</span> Eventos</span>
+                <span class="nav-inactivo"><span>○</span> Venues</span>
+                <span class="nav-inactivo"><span>○</span> Usuarios</span>
+                <span class="nav-inactivo"><span>○</span> Reportes</span>
+                <span class="nav-inactivo"><span>○</span> Configuración</span>
+            </nav>
+            <div class="usuario-admin"><span class="avatar">A</span><span><strong>Administrador</strong><small>Cuenta activa</small></span></div>
+        </aside>
+
+        <!-- Fragmento parametrizado con conteos simples del repositorio. -->
+        <section th:fragment="resumenAdmin(pendientesCount, aprobadasCount, rechazadasCount)" class="tarjetas-resumen">
+            <article class="tarjeta-resumen"><span class="icono-mini icono-ambar">↗</span><small>Por revisar</small><strong th:text="${pendientesCount}">0</strong><span class="texto-verde">Requieren atención</span></article>
+            <article class="tarjeta-resumen"><span class="icono-mini icono-verde">✓</span><small>Aprobados</small><strong th:text="${aprobadasCount}">0</strong><span>Organizadores habilitados</span></article>
+            <article class="tarjeta-resumen"><span class="icono-mini icono-rojo">!</span><small>Rechazados</small><strong th:text="${rechazadasCount}">0</strong><span>Solicitudes no aprobadas</span></article>
+        </section>
+
+        <!-- Tabla de solicitudes recibidas. -->
+        <section th:fragment="tablaPendientes(solicitudes)" class="panel tabla-panel">
+            <div class="encabezado-tabla">
+                <div><h2>Organizaciones por revisar</h2><p>Verifica los datos antes de tomar una decisión.</p></div>
+                <label class="busqueda">⌕ <input id="buscarOrganizacion" type="search" placeholder="Buscar organización"></label>
+            </div>
+            <div class="tabla-scroll" th:if="${solicitudes != null and !solicitudes.empty}">
+                <table id="tablaSolicitudes">
+                    <thead><tr><th>ORGANIZACIÓN / CONTACTO</th><th>FECHA</th><th>EVENTOS</th><th>ESTADO</th><th>ACCIÓN</th></tr></thead>
+                    <tbody>
+                        <tr th:each="s : ${solicitudes}">
+                            <td>
+                                <strong th:text="${s.nombreOrganizacion}"></strong>
+                                <small th:text="|${s.nombreContacto} · ${s.correo}|"></small>
+                                <small th:if="${s.identificacionLegal != null}" th:text="|Identificación: ${s.identificacionLegal}|"></small>
+                                <small th:if="${s.sitioWeb != null and !s.sitioWeb.isBlank()}" th:text="${s.sitioWeb}"></small>
+                            </td>
+                            <td th:text="${#temporals.format(s.fechaSolicitud, 'dd MMM · HH:mm')}"></td>
+                            <td th:text="${s.tipoEventos}"></td>
+                            <td><span class="estado estado-pendiente">Pendiente</span></td>
+                            <td class="acciones-tabla">
+                                <form th:action="@{/admin/organizadores/{id}/aprobar(id=${s.id})}" method="post">
+                                    <button class="boton boton-aprobar" type="submit">Aprobar</button>
+                                </form>
+                                <button class="boton boton-rechazar" type="button" th:attr="data-modal='rechazo-' + ${s.id}">Rechazar</button>
+                                <div th:replace="~{organizador/fragmentos :: modalRechazo(${s})}"></div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="vacio" th:if="${solicitudes == null or solicitudes.empty}">
+                <span>✓</span><h3>No hay solicitudes pendientes</h3>
+                <p>Las nuevas solicitudes de organizadores aparecerán aquí.</p>
+                <a th:href="@{/organizador/solicitud}">Ver formulario de solicitud →</a>
+            </div>
+            <footer class="pie-tabla">
+                <span th:text="|Mostrando ${solicitudes.size()} solicitudes pendientes|">Mostrando solicitudes pendientes</span>
+                <a th:href="@{/organizador/solicitud}">Ver formulario público →</a>
+            </footer>
+        </section>
+
+        <!-- Fragmento parametrizado del diálogo que solicita el motivo del rechazo. -->
+        <dialog th:fragment="modalRechazo(solicitud)" class="modal-rechazo" th:id="|rechazo-${solicitud.id}|">
+            <form class="form-rechazo" th:action="@{/admin/organizadores/{id}/rechazar(id=${solicitud.id})}" method="post">
+                <span class="icono-modal">!</span>
+                <h2>Rechazar solicitud</h2>
+                <p>Deja claro el motivo para que la organización sepa cómo proceder.</p>
+                <label th:for="|motivo-${solicitud.id}|">Motivo del rechazo</label>
+                <textarea th:id="|motivo-${solicitud.id}|" name="motivo" maxlength="1000" placeholder="Explica por qué no se puede aprobar la solicitud." required></textarea>
+                <div class="acciones-modal">
+                    <button class="boton boton-secundario" type="button" th:attr="data-cerrar='rechazo-' + ${solicitud.id}">Volver a solicitudes</button>
+                    <button class="boton boton-rechazar" type="submit">Confirmar rechazo</button>
+                </div>
+                <small>El motivo quedará guardado junto con la solicitud.</small>
+            </form>
+        </dialog>
+
+    </body>
+</html>
