@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+    <body>
+
+        <head th:fragment="head(titulo)">
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <title th:text="${titulo}">EvenTicket</title>
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+            <link rel="stylesheet" th:href="@{/css/catalogo.css}">
+        </head>
+
+        <header th:fragment="navPublica" class="cat-nav">
+            <div class="cat-container cat-nav-contenido">
+                <a th:replace="~{general/fragmentos :: marca('')}"></a>
+                <nav class="cat-nav-links" aria-label="Navegación principal">
+                    <a class="activo" th:href="@{/eventos}">Explorar</a>
+                    <a th:href="@{/eventos#filtros}">Categorías</a>
+                    <a th:href="@{/eventos}">Ayuda</a>
+                </nav>
+                <div class="cat-nav-acciones">
+                    <a class="cat-btn cat-btn-borde cat-btn-chico" th:href="@{/eventos}">Iniciar sesión</a>
+                    <a class="cat-btn cat-btn-principal cat-btn-chico" th:href="@{/eventos}">Registrarse</a>
+                </div>
+            </div>
+        </header>
+
+        <section th:fragment="filtrosBusqueda(meses, categorias, venues)" class="cat-filtros-wrap" id="filtros">
+            <div class="cat-container">
+                <form class="cat-filtros" th:action="@{/eventos}" method="get">
+                    <div class="cat-campo cat-campo-texto">
+                        <label for="q">Buscar eventos</label>
+                        <div class="cat-input-icono">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+                            <input id="q" name="q" type="search" th:value="${texto}" placeholder="Artista, evento o lugar" maxlength="80">
+                        </div>
+                    </div>
+                    <div class="cat-campo">
+                        <label for="mes">Fecha</label>
+                        <select id="mes" name="mes">
+                            <option value="">Cualquier fecha</option>
+                            <option th:each="m : ${meses}" th:value="${m.valor}" th:text="${m.etiqueta}"
+                                    th:selected="${m.valor == mesSel}"></option>
+                        </select>
+                    </div>
+                    <div class="cat-campo">
+                        <label for="categoria">Categoría</label>
+                        <select id="categoria" name="categoria">
+                            <option value="">Todas</option>
+                            <option th:each="c : ${categorias}" th:value="${c.id}" th:text="${c.nombre}"
+                                    th:selected="${categoriaSel != null and c.id == categoriaSel}"></option>
+                        </select>
+                    </div>
+                    <div class="cat-campo">
+                        <label for="venue">Venue</label>
+                        <select id="venue" name="venue">
+                            <option value="">Cualquier recinto</option>
+                            <option th:each="v : ${venues}" th:value="${v.id}" th:text="${v.nombre}"
+                                    th:selected="${venueSel != null and v.id == venueSel}"></option>
+                        </select>
+                    </div>
+                    <button class="cat-btn cat-btn-principal cat-btn-buscar" type="submit">Buscar</button>
+                </form>
+            </div>
+        </section>
+
+        <a th:fragment="tarjetaEvento(e)" class="cat-tarjeta" th:href="@{/eventos/{id}(id=${e.id})}">
+            <div class="cat-tarjeta-arte" th:style="${e.estiloFondo}">
+                <span class="cat-circulo" th:style="'background:' + ${e.colorCirculo}"><i></i></span>
+                <div class="cat-arte-texto">
+                    <strong th:text="${e.titulo}">Evento</strong>
+                    <small th:text="${#strings.toUpperCase(e.categoria.nombre)}">CATEGORÍA</small>
+                </div>
+            </div>
+            <div class="cat-tarjeta-info">
+                <span class="cat-fecha" th:text="${e.fechaCorta}">12 OCT · 19:00</span>
+                <h3 th:text="${e.titulo}">Evento</h3>
+                <p class="cat-lugar"><i class="cat-pin"></i><span th:text="${e.venue.nombreCompleto}">Venue</span></p>
+            </div>
+        </a>
+
+        <aside th:fragment="panelBoletos(evento)" class="cat-panel-boletos" id="panelBoletos"
+               th:attr="data-evento=${evento.id}">
+            <span class="cat-pill">ENTRADAS</span>
+            <h3>Elige tus boletos</h3>
+
+            <div class="cat-tickets" th:if="${!evento.tiposEntrada.empty}">
+                <div class="cat-ticket" data-ticket th:each="t, i : ${evento.tiposEntrada}"
+                     th:attr="data-id=${t.id},data-precio=${t.precio.intValue()}">
+                    <strong class="cat-ticket-nombre" th:text="${t.nombre}">General</strong>
+                    <strong class="cat-ticket-precio"
+                            th:text="${'₡' + #numbers.formatInteger(t.precio.intValue(), 1, 'WHITESPACE')}">₡0</strong>
+                    <small class="cat-ticket-desc" th:text="${t.descripcion}"></small>
+                    <div class="cat-stepper">
+                        <button type="button" data-accion="menos" aria-label="Quitar un boleto">−</button>
+                        <span data-cantidad th:text="${i.first} ? 1 : 0">0</span>
+                        <button type="button" data-accion="mas" aria-label="Agregar un boleto">+</button>
+                    </div>
+                </div>
+            </div>
+            <p class="cat-sin-entradas" th:if="${evento.tiposEntrada.empty}">Las entradas de este evento aún no están disponibles.</p>
+
+            <div class="cat-subtotal">
+                <span>Subtotal</span>
+                <strong id="subtotal">₡0</strong>
+            </div>
+            <button type="button" id="btnCarrito" class="cat-btn cat-btn-principal cat-btn-ancho">Agregar al carrito →</button>
+            <p class="cat-nota-carrito" id="mensajeCarrito" hidden></p>
+        </aside>
+
+    </body>
+</html>
