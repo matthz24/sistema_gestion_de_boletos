@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{catalogo/fragmentos :: head('Eventos | EvenTicket')}"></head>
+<body>
+<header th:replace="~{catalogo/fragmentos :: navPublica}"></header>
+
+<section class="cat-hero">
+    <div class="cat-container cat-hero-contenido">
+        <div class="cat-hero-texto">
+            <span class="cat-badge">AGENDA 2026</span>
+            <h1>La ciudad se vive<br>cuando nos encontramos.</h1>
+            <p>Encuentra tu próximo plan. Música, ideas y noches que se quedan contigo.</p>
+            <div class="cat-hero-acciones">
+                <a class="cat-btn cat-btn-principal" href="#eventos">Explorar eventos</a>
+                <span class="cat-hero-nota">Más de 120 experiencias</span>
+            </div>
+        </div>
+        <div class="cat-hero-decor" aria-hidden="true">
+            <span class="c-grande"></span>
+            <span class="c-rosa"></span>
+            <span class="c-amarillo"></span>
+        </div>
+    </div>
+</section>
+
+<!-- Filtros (HU 4) -->
+<section th:replace="~{catalogo/fragmentos :: filtrosBusqueda(${meses}, ${categorias}, ${venues})}"></section>
+
+<!-- Catálogo (HU 3) -->
+<section class="cat-seccion" id="eventos">
+    <div class="cat-container">
+        <div th:replace="~{general/fragmentos :: mostrarMensajes}"></div>
+
+        <div class="cat-seccion-encabezado">
+            <div>
+                <h2 th:text="${hayFiltros} ? 'Resultados de tu búsqueda' : 'Eventos para vivirlos'">Eventos para vivirlos</h2>
+                <p th:text="${hayFiltros} ? |${eventos.size()} eventos encontrados| : 'Planes únicos seleccionados para ti esta semana.'">Planes únicos seleccionados para ti esta semana.</p>
+            </div>
+            <a class="cat-enlace" th:href="@{/eventos}">Ver todos los eventos →</a>
+        </div>
+
+        <div class="cat-grid" th:if="${!eventos.empty}">
+            <th:block th:each="e : ${eventos}">
+                <a th:replace="~{catalogo/fragmentos :: tarjetaEvento(${e})}"></a>
+            </th:block>
+        </div>
+
+        <div class="cat-vacio" th:if="${eventos.empty}">
+            <h3>No encontramos eventos con esos filtros</h3>
+            <p>Prueba con otra fecha, categoría o recinto.</p>
+            <a class="cat-btn cat-btn-principal" th:href="@{/eventos}">Quitar filtros</a>
+        </div>
+    </div>
+</section>
+
+<script th:src="@{/js/modulos/catalogo.js}"></script>
+</body>
+</html>

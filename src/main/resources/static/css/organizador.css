@@ -186,4 +186,5 @@ td:first-child small { margin-top: 3px; color: #8991a6; font-size: 8px; }
   .busqueda { width: 100%; }
   .acciones-modal { grid-template-columns: 1fr; }
   .form-rechazo { padding: 22px; }
+
 }

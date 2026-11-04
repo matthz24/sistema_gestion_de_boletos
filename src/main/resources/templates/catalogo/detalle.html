@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{catalogo/fragmentos :: head(${evento.titulo + ' | EvenTicket'})}"></head>
+<body>
+<header th:replace="~{catalogo/fragmentos :: navPublica}"></header>
+
+<main class="cat-container cat-detalle">
+
+    <!-- Banner del evento (HU 5: imagen) -->
+    <section class="cat-banner" th:style="${evento.estiloFondo}">
+        <span class="cat-banner-etiqueta"
+              th:text="${#strings.toUpperCase(evento.etiquetaBanner != null ? evento.etiquetaBanner : evento.categoria.nombre)}">MÚSICA EN VIVO</span>
+        <span class="cat-circulo cat-circulo-banner" th:style="'background:' + ${evento.colorCirculo}"><i></i></span>
+        <div class="cat-banner-texto">
+            <strong th:text="${#strings.toUpperCase(evento.titulo)}">FESTIVAL BRUMA</strong>
+            <small th:text="${evento.resumenBanner}">12 OCTUBRE · PARQUE VIVA · ALAJUELA</small>
+        </div>
+    </section>
+
+    <div class="cat-detalle-grid">
+        <!-- Información (HU 5: descripción, fecha y ubicación) -->
+        <div class="cat-detalle-info">
+            <h1 th:text="|${evento.titulo} ${evento.fechaHora.year}|">Festival Bruma 2026</h1>
+            <p class="cat-subtitulo" th:text="${evento.subtitulo}">Una noche para volver a sentir la música en comunidad.</p>
+
+            <div class="cat-datos">
+                <div>
+                    <small>FECHA Y HORA</small>
+                    <strong th:text="${evento.fechaLarga}">Sábado, 12 oct · 7:00 pm</strong>
+                </div>
+                <div>
+                    <small>UBICACIÓN</small>
+                    <strong th:text="${evento.venue.ubicacionCompleta}">Parque Viva · Alajuela, Costa Rica</strong>
+                </div>
+            </div>
+
+            <h2>Sobre el evento</h2>
+            <p class="cat-descripcion" th:text="${evento.descripcion}">Descripción del evento.</p>
+        </div>
+
+        <aside th:replace="~{catalogo/fragmentos :: panelBoletos(${evento})}"></aside>
+    </div>
+</main>
+
+<script th:src="@{/js/modulos/catalogo.js}"></script>
+</body>
+</html>
