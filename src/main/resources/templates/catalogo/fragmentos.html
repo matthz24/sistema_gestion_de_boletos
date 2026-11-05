@@ -26,10 +26,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 <a th:href="@{/eventos#filtros}">Categorías</a>
                 <a th:href="@{/eventos}">Ayuda</a>
             </nav>
-            <div class="cat-nav-acciones">
+            <div class="cat-nav-acciones" th:if="${!logueado}">
                 <a class="cat-btn cat-btn-borde cat-btn-chico" th:href="@{/login}">Iniciar sesión</a>
                 <a class="cat-btn cat-btn-principal cat-btn-chico" th:href="@{/auth/registro}">Registrarse</a>
             </div>
+            <form class="cat-nav-acciones" th:if="${logueado}" th:action="@{/logout}" method="post">
+                <button class="cat-btn cat-btn-borde cat-btn-chico" type="submit">Cerrar sesión</button>
+            </form>
         </div>
     </header>
 
