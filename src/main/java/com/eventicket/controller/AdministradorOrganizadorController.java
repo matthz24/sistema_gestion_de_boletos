@@ -25,6 +25,7 @@ public class AdministradorOrganizadorController {
         model.addAttribute("pendientesCount", solicitudService.getTotalSolicitudes(EstadoSolicitud.PENDIENTE));
         model.addAttribute("aprobadasCount", solicitudService.getTotalSolicitudes(EstadoSolicitud.APROBADA));
         model.addAttribute("rechazadasCount", solicitudService.getTotalSolicitudes(EstadoSolicitud.RECHAZADA));
+        model.addAttribute("menuActivo", "organizadores");
         return "organizador/pendientes";
     }
 

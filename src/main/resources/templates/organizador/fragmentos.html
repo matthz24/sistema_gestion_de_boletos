@@ -82,10 +82,15 @@
             <a th:replace="~{general/fragmentos :: marca('marca-clara')}"></a>
             <small class="rol-admin">ADMINISTRACIÓN</small>
             <nav class="navegacion-admin" aria-label="Navegación de administración">
-                <a th:href="@{/}"><span>○</span> Resumen</a>
-                <a class="activo" th:href="@{/admin/organizadores/pendientes}"><span>●</span> Organizadores</a>
+                <a th:classappend="${menuActivo == 'organizadores'} ? ' activo' : ''"
+                   th:href="@{/admin/organizadores/pendientes}">
+                    <span>○</span> Organizadores
+                </a>
+                <a th:classappend="${menuActivo == 'venues'} ? ' activo' : ''"
+                   th:href="@{/admin/venues}">
+                    <span>○</span> Venues
+                </a>
                 <span class="nav-inactivo"><span>○</span> Eventos</span>
-                <span class="nav-inactivo"><span>○</span> Venues</span>
                 <span class="nav-inactivo"><span>○</span> Usuarios</span>
                 <span class="nav-inactivo"><span>○</span> Reportes</span>
                 <span class="nav-inactivo"><span>○</span> Configuración</span>
