@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Recuperar contraseña · EvenTicket</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/catalogo.css}">
+    <link rel="stylesheet" th:href="@{/css/auth.css}">
+</head>
+<body>
+<main class="auth auth--recovery">
+
+    <aside class="auth-art auth-art--indigo" aria-label="Información de EvenTicket">
+        <a th:replace="~{general/fragmentos :: marca('marca-clara')}"></a>
+
+        <div class="art-orb art-orb--one" aria-hidden="true"></div>
+        <div class="art-orb art-orb--two" aria-hidden="true"></div>
+        <div class="art-orb art-orb--three" aria-hidden="true"></div>
+        <div class="recovery-orb recovery-orb--four" aria-hidden="true"></div>
+
+        <section class="art-copy">
+            <span class="eyebrow eyebrow--glass">RECUPERACIÓN DE CUENTA</span>
+            <h1>Vuelve a tus<br>próximos eventos.</h1>
+            <p>
+                Recupera el acceso a tu cuenta y continúa disfrutando
+                de tus experiencias favoritas.
+            </p>
+
+            <div class="security-card">
+                <strong>Tu cuenta está protegida</strong>
+                <span>
+                    Te enviaremos un enlace de recuperación al correo asociado
+                    con tu cuenta.
+                </span>
+            </div>
+        </section>
+
+        <small class="recovery-caption">EVENTICKET · EVENTOS QUE CONECTAN</small>
+    </aside>
+
+    <section class="auth-main">
+        <div class="auth-form-wrap recovery-wrap">
+
+            <div class="mobile-brand">
+                <a th:replace="~{general/fragmentos :: marca('')}"></a>
+            </div>
+
+            <a class="back-link" th:href="@{/login}">
+                <span aria-hidden="true">←</span>
+                Volver a iniciar sesión
+            </a>
+
+            <span class="eyebrow">¿OLVIDASTE TU CONTRASEÑA?</span>
+            <h2>Recupera tu cuenta</h2>
+            <p class="intro">
+                Escribe el correo electrónico con el que creaste tu cuenta.
+                Te enviaremos instrucciones para restablecer tu contraseña.
+            </p>
+
+            <div class="alert" role="alert" th:if="${error}" th:text="${error}">
+                No se pudo procesar la solicitud.
+            </div>
+
+            <div class="alert alert--success" role="status" th:if="${aviso}" th:text="${aviso}">
+                Si el correo corresponde a una cuenta, recibirás instrucciones.
+            </div>
+
+            <form th:action="@{/auth/recuperar}" method="post" class="form-stack">
+                <div class="field">
+                    <label for="correo">Correo electrónico</label>
+                    <input id="correo"
+                           name="correo"
+                           type="email"
+                           placeholder="nombre@correo.com"
+                           autocomplete="email"
+                           maxlength="160"
+                           required
+                           autofocus>
+                </div>
+
+                <button class="button button--primary button--wide" type="submit">
+                    Enviar instrucciones
+                    <span aria-hidden="true">→</span>
+                </button>
+            </form>
+
+            <aside class="note note--security">
+                <b>Por tu seguridad</b>
+                <span>
+                    Si existe una cuenta asociada a ese correo, recibirás
+                    instrucciones para continuar.
+                </span>
+            </aside>
+
+            <p class="support">
+                ¿Necesitas ayuda?
+                <a th:href="@{/}">Contacta con EvenTicket</a>
+            </p>
+        </div>
+    </section>
+</main>
+</body>
+</html>

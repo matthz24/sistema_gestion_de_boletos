@@ -32,15 +32,21 @@ public class SecurityConfig {
                         .requestMatchers("/", "/eventos", "/eventos/**",
                                 "/css/**", "/js/**", "/img/**", "/webjars/**",
                                 "/favicon.ico", "/error").permitAll()
-                        .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/login","/auth/**").permitAll()
                         .requestMatchers("/organizador/solicitud",
                                 "/admin/organizadores/**").permitAll()
                         .anyRequest().authenticated()
                 )
-                .formLogin(form -> form.permitAll())
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .loginProcessingUrl("/login")
+                        .defaultSuccessUrl("/eventos", true)
+                        .failureUrl("/login?error")
+                        .permitAll()
+                )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
-                        .logoutSuccessUrl("/eventos")
+                        .logoutSuccessUrl("/login?logout")
                         .permitAll()
                 );
 
