@@ -156,3 +156,11 @@ h1, h2, h3, p { margin: 0; }
   .cat-grid { grid-template-columns: 1fr; }
   .cat-nav-acciones .cat-btn-borde { display: none; }
 }
+/* Compatibilidad con Bootstrap */
+body {
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+  line-height: normal;
+  color: var(--texto);
+  background: #fff;
+}
+h1, h2, h3, h4, h5, h6 { font-weight: 700; }
