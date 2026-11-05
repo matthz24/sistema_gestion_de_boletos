@@ -188,3 +188,11 @@ td:first-child small { margin-top: 3px; color: #8991a6; font-size: 8px; }
   .form-rechazo { padding: 22px; }
 
 }
+/* Compatibilidad con Bootstrap */
+body {
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+  line-height: normal;
+  color: #20263d;
+  background: #f7f8fc;
+}
+h1, h2, h3, h4, h5, h6 { font-weight: 700; }
