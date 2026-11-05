@@ -20,6 +20,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface EventoRepository extends JpaRepository<Evento, Long> {
 
+    boolean existsByVenue_Id(Long venueId);
+
     // Consulta derivada: se usa para armar la lista de meses del filtro de fecha.
     List<Evento> findByActivoTrueOrderByFechaHoraAsc();
 

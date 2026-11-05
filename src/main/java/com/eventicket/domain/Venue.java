@@ -30,23 +30,28 @@ public class Venue implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_venue")
     private Long id;
- 
+
     @Column(nullable = false, length = 120)
     private String nombre;
- 
+
     @Column(length = 200)
     private String direccion;
- 
+
     @Column(length = 80)
     private String ciudad;
- 
+
     @Column(nullable = false, length = 60)
     private String pais = "Costa Rica";
- 
+
+    @Column(nullable = false)
+    private Integer capacidad = 100;
+
     public String getNombreCompleto() {
-        return ciudad == null || ciudad.isBlank() ? nombre : nombre + " · " + ciudad;
+        return ciudad == null || ciudad.isBlank()
+                ? nombre
+                : nombre + " · " + ciudad;
     }
- 
+
     public String getUbicacionCompleta() {
         return getNombreCompleto() + ", " + pais;
     }

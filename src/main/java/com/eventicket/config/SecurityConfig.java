@@ -19,12 +19,12 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-
+    
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
+    
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -32,9 +32,10 @@ public class SecurityConfig {
                         .requestMatchers("/", "/eventos", "/eventos/**",
                                 "/css/**", "/js/**", "/img/**", "/webjars/**",
                                 "/favicon.ico", "/error").permitAll()
-                        .requestMatchers("/login","/auth/**").permitAll()
+                        .requestMatchers("/login", "/auth/**").permitAll()
                         .requestMatchers("/organizador/solicitud",
-                                "/admin/organizadores/**").permitAll()
+                                "/admin/organizadores/**").permitAll().requestMatchers("/admin/venues/**")
+                        .hasRole("ADMINISTRADOR")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
@@ -49,7 +50,7 @@ public class SecurityConfig {
                         .logoutSuccessUrl("/login?logout")
                         .permitAll()
                 );
-
+        
         return http.build();
     }
 }

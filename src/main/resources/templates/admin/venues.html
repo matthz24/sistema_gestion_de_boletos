@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="~{general/fragmentos :: head('Gestión de venues | EvenTicket')}"></head>
+    <body>
+        <div class="admin-layout venues-admin-layout">
+            <aside th:replace="~{organizador/fragmentos :: menuAdmin}"></aside>
+
+            <main class="admin-main">
+                <header class="barra-superior">
+                    <span>Venues</span>
+                    <div class="ms-auto d-flex align-items-center gap-3">
+                        <a th:href="@{/eventos}">Vista previa del sistema</a>
+                        <span class="avatar">A</span>
+                        <span>Administrador</span>
+                    </div>
+                </header>
+
+                <div class="admin-contenido venues-admin-content">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+                        <div>
+                            <h1 class="h3 mb-1">Gestión de venues</h1>
+                            <p class="text-secondary mb-0">
+                                Administra los recintos disponibles para publicar eventos.
+                            </p>
+                        </div>
+
+                        <button class="btn btn-primary px-4"
+                                type="button"
+                                data-bs-toggle="modal"
+                                data-bs-target="#venueFormModal">
+                            <span aria-hidden="true">＋</span>
+                            Crear venue
+                        </button>
+                    </div>
+
+                    <div class="alert alert-success alert-dismissible fade show"
+                         role="status" th:if="${aviso}">
+                        <span th:text="${aviso}"></span>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                aria-label="Cerrar"></button>
+                    </div>
+
+                    <div class="alert alert-danger alert-dismissible fade show"
+                         role="alert" th:if="${error}">
+                        <span th:text="${error}"></span>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                aria-label="Cerrar"></button>
+                    </div>
+
+                    <section class="card venues-table-card">
+                        <div class="card-header bg-white d-flex flex-wrap justify-content-between align-items-center gap-3 py-3">
+                            <h2 class="h5 mb-0">Recintos</h2>
+
+                            <div class="input-group input-group-sm venues-search">
+                                <span class="input-group-text" aria-hidden="true">⌕</span>
+                                <input id="buscarVenue"
+                                       class="form-control"
+                                       type="search"
+                                       placeholder="Buscar recinto"
+                                       aria-label="Buscar recinto">
+                            </div>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0 venues-table">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th scope="col">Nombre del recinto</th>
+                                        <th scope="col">Ubicación</th>
+                                        <th scope="col">Capacidad</th>
+                                        <th scope="col">Acciones</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="tablaVenues">
+                                    <tr th:each="venue : ${venues}" data-venue-row>
+                                        <td class="fw-semibold" th:text="${venue.nombre}">Parque Viva</td>
+
+                                        <td th:text="${venue.ciudad != null and !venue.ciudad.isBlank()
+                                            ? venue.ciudad
+                                            : venue.direccion}">
+                                            Alajuela
+                                        </td>
+
+                                        <td th:text="${venue.capacidad}">12000</td>
+
+                                        <td class="text-nowrap">
+                                            <a class="btn btn-link btn-sm p-0 me-2"
+                                               th:href="@{/admin/venues/{id}/editar(id=${venue.id})}">
+                                                Editar
+                                            </a>
+
+                                            <button class="btn btn-link btn-sm p-0 text-danger"
+                                                    type="button"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#eliminarVenueModal"
+                                                    th:attr="data-bs-id=${venue.id},
+                                                    data-bs-nombre=${venue.nombre}">
+                                                Eliminar
+                                            </button>
+                                        </td>
+                                    </tr>
+
+                                    <tr th:if="${venues == null or venues.empty}">
+                                        <td colspan="4" class="text-center text-secondary py-5">
+                                            Aún no hay recintos registrados.
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="card-footer bg-white text-secondary small"
+                             th:text="|${venues.size()} recintos · ordenados por nombre|">
+                            0 recintos · ordenados por nombre
+                        </div>
+                    </section>
+                </div>
+            </main>
+        </div>
+
+        <div class="modal fade" id="venueFormModal" tabindex="-1"
+             aria-labelledby="venueFormModalTitle" aria-hidden="true"
+             th:attr="data-auto-open=${abrirFormulario}">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <form th:action="@{/admin/venues/guardar}"
+                          th:object="${venueForm}"
+                          method="post">
+
+                        <input type="hidden" th:field="*{id}">
+
+                        <div class="modal-header">
+                            <h2 class="modal-title fs-5" id="venueFormModalTitle"
+                                th:text="${venueForm.id == null ? 'Crear venue' : 'Editar venue'}">
+                                Crear venue
+                            </h2>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Cerrar"></button>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="alert alert-danger"
+                                 th:if="${#fields.hasGlobalErrors()}">
+                                <p class="mb-0"
+                                   th:each="err : ${#fields.globalErrors()}"
+                                   th:text="${err}">
+                                    No se pudo guardar el recinto.
+                                </p>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="nombre" class="form-label">Nombre del recinto</label>
+                                <input id="nombre"
+                                       class="form-control"
+                                       type="text"
+                                       th:field="*{nombre}"
+                                       maxlength="120"
+                                       required
+                                       th:classappend="${#fields.hasErrors('nombre')} ? ' is-invalid'">
+                                <div class="invalid-feedback"
+                                     th:if="${#fields.hasErrors('nombre')}"
+                                     th:errors="*{nombre}"></div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="ubicacion" class="form-label">Ubicación</label>
+                                <input id="ubicacion"
+                                       class="form-control"
+                                       type="text"
+                                       th:field="*{ubicacion}"
+                                       maxlength="80"
+                                       placeholder="Ej. Alajuela"
+                                       required
+                                       th:classappend="${#fields.hasErrors('ubicacion')} ? ' is-invalid'">
+                                <div class="invalid-feedback"
+                                     th:if="${#fields.hasErrors('ubicacion')}"
+                                     th:errors="*{ubicacion}"></div>
+                            </div>
+
+                            <div>
+                                <label for="capacidad" class="form-label">Capacidad</label>
+                                <input id="capacidad"
+                                       class="form-control"
+                                       type="number"
+                                       th:field="*{capacidad}"
+                                       min="1"
+                                       step="1"
+                                       required
+                                       th:classappend="${#fields.hasErrors('capacidad')} ? ' is-invalid'">
+                                <div class="invalid-feedback"
+                                     th:if="${#fields.hasErrors('capacidad')}"
+                                     th:errors="*{capacidad}"></div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary"
+                                    data-bs-dismiss="modal">
+                                Cancelar
+                            </button>
+                            <button type="submit" class="btn btn-primary"
+                                    th:text="${venueForm.id == null ? 'Crear venue' : 'Guardar cambios'}">
+                                Crear venue
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="eliminarVenueModal" tabindex="-1"
+             aria-labelledby="eliminarVenueTitulo" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <form th:action="@{/admin/venues/eliminar}" method="post">
+                        <input type="hidden" name="id" id="venueIdEliminar">
+
+                        <div class="modal-header">
+                            <h2 class="modal-title fs-5" id="eliminarVenueTitulo">
+                                Eliminar venue
+                            </h2>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Cerrar"></button>
+                        </div>
+
+                        <div class="modal-body">
+                            ¿Confirmas que deseas eliminar
+                            <strong id="venueNombreEliminar"></strong>?
+                            Si tiene eventos asociados, no se podrá eliminar.
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary"
+                                    data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+        <script th:src="@{/js/modulos/venues.js}"></script>
+    </body>
+</html>
