@@ -27,10 +27,23 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(auth -> auth.requestMatchers("/", "/eventos", "/eventos/**",
-                "/css/**", "/js/**", "/img/**", "/favicon.ico", "/error").permitAll().requestMatchers("/organizador/solicitud",
-                        "/admin/organizadores/**").permitAll().anyRequest().authenticated()).formLogin(form -> form.permitAll()).logout(logout -> logout.logoutUrl("/logout")
-                .logoutSuccessUrl("/eventos").permitAll());
+        http
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/", "/eventos", "/eventos/**",
+                                "/css/**", "/js/**", "/img/**",
+                                "/favicon.ico", "/error").permitAll()
+                        .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/organizador/solicitud",
+                                "/admin/organizadores/**").permitAll()
+                        .anyRequest().authenticated()
+                )
+                .formLogin(form -> form.permitAll())
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/eventos")
+                        .permitAll()
+                );
+
         return http.build();
     }
 }

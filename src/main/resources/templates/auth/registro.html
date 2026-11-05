@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Crear cuenta · EvenTicket</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" th:href="@{/css/catalogo.css}">
+    <link rel="stylesheet" th:href="@{/css/auth.css}">
+</head>
+<body>
+<main class="auth auth--register">
+
+    <aside class="auth-art auth-art--lavender">
+        <a th:replace="~{general/fragmentos :: marca('')}"></a>
+
+        <div class="poster-art">
+            <div class="poster-art__orb"></div>
+            <span>Una ciudad,<br>miles de historias</span>
+            <small>EVENTICKET · VIVE · COMPARTE</small>
+        </div>
+
+        <section class="art-copy">
+            <h1>Haz espacio<br>para lo que viene.</h1>
+            <p>Únete a una comunidad que siempre tiene algo que celebrar.</p>
+        </section>
+    </aside>
+
+    <section class="auth-main auth-main--register">
+        <div class="register-wrap">
+
+            <div class="mobile-brand">
+                <a th:replace="~{general/fragmentos :: marca('')}"></a>
+            </div>
+
+            <a class="back-link" th:href="@{/}">← &nbsp; Volver al inicio</a>
+
+            <span class="eyebrow">CREA TU CUENTA</span>
+            <h2>Regístrate en EvenTicket</h2>
+            <p class="intro">Elige cómo quieres ser parte de la experiencia.</p>
+
+            <div class="role-switch" role="tablist" aria-label="Tipo de cuenta">
+                <a class="role-switch__item role-switch__item--active"
+                   role="tab" aria-selected="true"
+                   th:href="@{/auth/registro}">Comprador</a>
+                <a class="role-switch__item"
+                   role="tab" aria-selected="false"
+                   th:href="@{/organizador/solicitud}">Organizador</a>
+            </div>
+
+            <h3 class="section-heading">Empieza por lo básico</h3>
+
+            <div class="alert alert--success" role="status" th:if="${param.exito}">
+                Cuenta creada correctamente. Ya puedes iniciar sesión.
+            </div>
+
+            <form th:action="@{/auth/registro}" th:object="${registroForm}" method="post" class="form-stack">
+
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="nombre">Nombre</label>
+                        <input id="nombre" type="text" th:field="*{nombre}"
+                               placeholder="María" autocomplete="given-name" required>
+                        <small class="field__error"
+                               th:if="${#fields.hasErrors('nombre')}"
+                               th:errors="*{nombre}"></small>
+                    </div>
+                    <div class="field">
+                        <label for="apellidos">Apellidos</label>
+                        <input id="apellidos" type="text" th:field="*{apellidos}"
+                               placeholder="López" autocomplete="family-name" required>
+                        <small class="field__error"
+                               th:if="${#fields.hasErrors('apellidos')}"
+                               th:errors="*{apellidos}"></small>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="correo">Correo electrónico</label>
+                    <input id="correo" type="email" th:field="*{correo}"
+                           placeholder="nombre@correo.com" autocomplete="email" required>
+                    <small class="field__error"
+                           th:if="${#fields.hasErrors('correo')}"
+                           th:errors="*{correo}"></small>
+                </div>
+
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="contrasena">Contraseña</label>
+                        <input id="contrasena" type="password" th:field="*{contrasena}"
+                               placeholder="Mínimo 8 caracteres"
+                               autocomplete="new-password" minlength="8" required>
+                        <small class="field__error"
+                               th:if="${#fields.hasErrors('contrasena')}"
+                               th:errors="*{contrasena}"></small>
+                    </div>
+                    <div class="field">
+                        <label for="confirmarContrasena">Confirmar contraseña</label>
+                        <input id="confirmarContrasena" type="password" th:field="*{confirmarContrasena}"
+                               placeholder="Repite tu contraseña"
+                               autocomplete="new-password" minlength="8" required>
+                        <small class="field__error"
+                               th:if="${#fields.hasErrors('confirmarContrasena')}"
+                               th:errors="*{confirmarContrasena}"></small>
+                    </div>
+                </div>
+
+                <label class="check-row">
+                    <input type="checkbox" th:field="*{aceptarTerminos}" required>
+                    <span>Acepto los <a href="#">Términos de servicio</a> y la
+                        <a href="#">Política de privacidad</a>.</span>
+                </label>
+                <small class="field__error"
+                       th:if="${#fields.hasErrors('aceptarTerminos')}"
+                       th:errors="*{aceptarTerminos}"></small>
+
+                <button class="button button--primary button--wide" type="submit">
+                    Crear cuenta de comprador <span aria-hidden="true">→</span>
+                </button>
+            </form>
+
+            <p class="switch-auth">
+                ¿Ya tienes cuenta? <a th:href="@{/login}">Inicia sesión</a>
+            </p>
+
+            <aside class="note">
+                <b>¿Organizas eventos?</b>
+                <span>La cuenta de organizador se solicita en
+                    <a th:href="@{/organizador/solicitud}">este formulario</a>
+                    y requiere aprobación del administrador.</span>
+            </aside>
+
+        </div>
+    </section>
+</main>
+</body>
+</html>
