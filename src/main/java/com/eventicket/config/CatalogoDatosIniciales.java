@@ -132,6 +132,7 @@ public class CatalogoDatosIniciales implements CommandLineRunner {
         TipoEntrada tipo = new TipoEntrada();
         tipo.setNombre(nombre);
         tipo.setDescripcion(descripcion);
+        tipo.setCantidad(50);
         tipo.setPrecio(new BigDecimal(precio));
         evento.agregarTipoEntrada(tipo);
     }
