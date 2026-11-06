@@ -158,6 +158,8 @@ td:first-child small { margin-top: 3px; color: #8991a6; font-size: 8px; }
   .admin-layout { grid-template-columns: 175px minmax(0, 1fr); }
   .barra-lateral { padding-left: 10px; padding-right: 10px; }
   .admin-contenido { padding: 22px 18px; }
+  .titulo-admin { align-items: flex-start; flex-direction: column; }
+  .tarjetas-resumen { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 650px) {
   .inicio-layout { margin: 24px 14px; padding: 26px; }
@@ -358,4 +360,105 @@ h1, h2, h3, h4, h5, h6 { font-weight: 700; }
     .venues-admin-layout .barra-superior {
         padding: 0 14px;
     }
+}
+
+/* Formulario de creación de evento */
+.evento-layout {
+    grid-template-columns: 246px minmax(0, 1fr);
+    background: #f7f8fc;
+}
+
+.evento-layout .barra-lateral {
+    background: #1f264a;
+}
+
+.evento-layout .barra-superior {
+    height: 76px;
+    padding: 0 40px;
+    background: #fff;
+}
+
+.evento-content {
+    max-width: none;
+    padding: 34px 40px;
+}
+
+.evento-content > .d-flex h1 {
+    color: #1a1f33;
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.evento-form-card,
+.evento-publicacion-card {
+    border: 1px solid #dce1ec;
+    border-radius: 16px;
+}
+
+.evento-content .form-label {
+    color: #69728a;
+    font-weight: 600;
+}
+
+.evento-content .form-control,
+.evento-content .form-select {
+    border-color: #dce1ec;
+    border-radius: 10px;
+}
+
+.evento-content .form-control:focus,
+.evento-content .form-select:focus {
+    border-color: #5c52e8;
+    box-shadow: 0 0 0 .2rem #5c52e822;
+}
+
+.evento-layout .btn-primary {
+    --bs-btn-bg: #5c52e8;
+    --bs-btn-border-color: #5c52e8;
+    --bs-btn-hover-bg: #5148d5;
+    --bs-btn-hover-border-color: #5148d5;
+    border-radius: 12px;
+}
+
+@media (max-width: 900px) {
+    .evento-layout {
+        grid-template-columns: 220px minmax(0, 1fr);
+    }
+
+    .evento-content {
+        padding: 26px 20px;
+    }
+}
+
+@media (max-width: 650px) {
+    .evento-content {
+        padding: 22px 12px;
+    }
+
+    .evento-layout .barra-superior {
+        padding: 0 14px;
+    }
+}
+
+.evento-ticket-row {
+    border-color: #dce1ec !important;
+    background: #fafbfe;
+}
+
+.evento-ticket-row .form-label {
+    display: block;
+    width: 100%;
+    color: #69728a;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.evento-ticket-row .form-control {
+    margin-top: 7px;
+}
+
+#addTicket {
+    border-color: #dce1ec;
+    color: #5c52e8;
+    font-weight: 600;
 }
