@@ -76,9 +76,31 @@
             <div class="nota-tiempo">La solicitud se valida manualmente por el equipo de EvenTicket.</div>
             <a class="enlace-admin" th:href="@{/admin/organizadores/pendientes}">Ir a administración de solicitudes →</a>
         </aside>
+        <aside th:fragment="menuOrganizador" class="barra-lateral">
+            <a th:replace="~{general/fragmentos :: marca('marca-clara')}"></a>
+            <small class="rol-admin">ORGANIZADOR</small>
+
+            <nav class="navegacion-admin" aria-label="Navegación de organizador">
+                <span class="nav-inactivo"><span>○</span> Resumen</span>
+                <span class="nav-inactivo"><span>○</span> Mis eventos</span>
+                <span class="nav-inactivo"><span>○</span> Estado de eventos</span>
+                <a th:classappend="${menuActivo == 'crear-evento'} ? ' activo' : ''"
+                   th:href="@{/organizador/eventos/nuevo}">
+                    <span>○</span> Crear evento
+                </a>
+                <span class="nav-inactivo"><span>○</span> Ventas y asistentes</span>
+                <span class="nav-inactivo"><span>○</span> Ajustes</span>
+            </nav>
+
+            <div class="usuario-admin">
+                <span class="avatar">O</span>
+                <span><strong>Organizador</strong><small>Cuenta activa</small></span>
+            </div>
+        </aside>
 
         <!-- Menú lateral para la pantalla administrativa. -->
         <aside th:fragment="menuAdmin" class="barra-lateral">
+
             <a th:replace="~{general/fragmentos :: marca('marca-clara')}"></a>
             <small class="rol-admin">ADMINISTRACIÓN</small>
             <nav class="navegacion-admin" aria-label="Navegación de administración">

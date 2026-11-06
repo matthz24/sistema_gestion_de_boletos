@@ -27,25 +27,27 @@ import lombok.Setter;
 @Entity
 @Table(name = "tipo_entrada")
 public class TipoEntrada implements Serializable {
- 
+
     private static final long serialVersionUID = 1L;
- 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_tipo_entrada")
     private Long id;
- 
+
     @Column(nullable = false, length = 60)
     private String nombre;
- 
+
     @Column(length = 160)
     private String descripcion;
- 
+
     @Column(nullable = false, precision = 12, scale = 2)
     private BigDecimal precio;
- 
+
+    @Column(nullable = false)
+    private Integer cantidad;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_evento")
     private Evento evento;
 }
- 

@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="~{general/fragmentos :: head('Crear evento | EvenTicket')}"></head>
+    <body>
+        <div class="admin-layout evento-layout">
+            <aside th:replace="~{organizador/fragmentos :: menuOrganizador}"></aside>
+
+            <main class="admin-main">
+                <header class="barra-superior">
+                    <span>Crear evento</span>
+                    <a class="ms-auto" th:href="@{/eventos}">Vista previa del sistema</a>
+                </header>
+
+                <div class="admin-contenido evento-content">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+                        <div>
+                            <h1 class="h2 mb-2">Crear evento</h1>
+                            <p class="text-secondary mb-0">
+                                Completa la información para guardar tu próximo evento.
+                            </p>
+                        </div>
+                        <span class="badge rounded-pill text-bg-warning px-3 py-2">
+                            BORRADOR
+                        </span>
+                    </div>
+
+                    <div class="alert alert-success" role="status" th:if="${param.exito}">
+                        <span th:text="${aviso}">El evento se guardó como borrador.</span>
+                    </div>
+
+                    <div class="row g-4 align-items-stretch">
+                        <section class="col-12 col-xl-8">
+                            <div class="card evento-form-card h-100">
+                                <div class="card-body p-4 p-lg-5">
+                                    <h2 class="h4 mb-4">Información general</h2>
+
+                                    <form id="eventoForm"
+                                          th:action="@{/organizador/eventos/nuevo}"
+                                          th:object="${eventoForm}"
+                                          method="post">
+
+                                        <div class="alert alert-danger"
+                                             th:if="${#fields.hasGlobalErrors()}">
+                                            <p class="mb-0"
+                                               th:each="err : ${#fields.globalErrors()}"
+                                               th:text="${err}">
+                                                No se pudo guardar el evento.
+                                            </p>
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label for="titulo" class="form-label">
+                                                Nombre del evento
+                                            </label>
+                                            <input id="titulo"
+                                                   class="form-control form-control-lg"
+                                                   type="text"
+                                                   th:field="*{titulo}"
+                                                   maxlength="150"
+                                                   placeholder="Ej. Festival Bruma 2026"
+                                                   required
+                                                   th:classappend="${#fields.hasErrors('titulo')} ? ' is-invalid'">
+                                            <div class="invalid-feedback"
+                                                 th:if="${#fields.hasErrors('titulo')}"
+                                                 th:errors="*{titulo}"></div>
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label for="descripcion" class="form-label">
+                                                Descripción
+                                            </label>
+                                            <textarea id="descripcion"
+                                                      class="form-control"
+                                                      th:field="*{descripcion}"
+                                                      rows="4"
+                                                      maxlength="2000"
+                                                      placeholder="Cuenta qué hace especial este evento"
+                                                      required
+                                                      th:classappend="${#fields.hasErrors('descripcion')} ? ' is-invalid'"></textarea>
+                                            <div class="invalid-feedback"
+                                                 th:if="${#fields.hasErrors('descripcion')}"
+                                                 th:errors="*{descripcion}"></div>
+                                        </div>
+
+                                        <div class="row g-3 mb-4">
+                                            <div class="col-12 col-md-6">
+                                                <label for="fecha" class="form-label">Fecha</label>
+                                                <input id="fecha"
+                                                       class="form-control form-control-lg"
+                                                       type="date"
+                                                       th:field="*{fecha}"
+                                                       required
+                                                       th:classappend="${#fields.hasErrors('fecha')} ? ' is-invalid'">
+                                                <div class="invalid-feedback"
+                                                     th:if="${#fields.hasErrors('fecha')}"
+                                                     th:errors="*{fecha}"></div>
+                                            </div>
+
+                                            <div class="col-12 col-md-6">
+                                                <label for="hora" class="form-label">Hora</label>
+                                                <input id="hora"
+                                                       class="form-control form-control-lg"
+                                                       type="time"
+                                                       th:field="*{hora}"
+                                                       required
+                                                       th:classappend="${#fields.hasErrors('hora')} ? ' is-invalid'">
+                                                <div class="invalid-feedback"
+                                                     th:if="${#fields.hasErrors('hora')}"
+                                                     th:errors="*{hora}"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label for="venueId" class="form-label">Venue / recinto</label>
+                                            <select id="venueId"
+                                                    class="form-select form-select-lg"
+                                                    th:field="*{venueId}"
+                                                    required
+                                                    th:classappend="${#fields.hasErrors('venueId')} ? ' is-invalid'">
+                                                <option value="">Selecciona un venue</option>
+                                                <option th:each="venue : ${venues}"
+                                                        th:value="${venue.id}"
+                                                        th:text="${venue.nombreCompleto}"
+                                                        th:attr="data-capacidad=${venue.capacidad}">
+                                                    Parque Viva · Alajuela
+                                                </option>
+                                            </select>
+                                            <div class="invalid-feedback"
+                                                 th:if="${#fields.hasErrors('venueId')}"
+                                                 th:errors="*{venueId}"></div>
+                                            <hr class="my-4">
+
+                                            <section aria-labelledby="categoriasBoletosTitulo">
+                                                <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+                                                    <div>
+                                                        <h3 class="h5 mb-1" id="categoriasBoletosTitulo">
+                                                            Categorías de boletos
+                                                        </h3>
+                                                        <p class="text-secondary small mb-0">
+                                                            Define el precio y las unidades disponibles para cada categoría.
+                                                        </p>
+                                                    </div>
+
+                                                    <span class="badge rounded-pill text-bg-primary" id="ticketCount">
+                                                        1 categoría
+                                                    </span>
+                                                </div>
+
+                                                <div id="ticketRows">
+                                                    <div class="evento-ticket-row border rounded-3 p-3 mb-3"
+                                                         data-ticket-row
+                                                         th:each="ticket, itemStat : *{tiposEntrada}">
+
+                                                        <div class="row g-3 align-items-end">
+                                                            <div class="col-12 col-md-4">
+                                                                <label class="form-label">
+                                                                    Categoría
+                                                                    <input class="form-control"
+                                                                           type="text"
+                                                                           data-field="nombre"
+                                                                           th:field="*{tiposEntrada[__${itemStat.index}__].nombre}"
+                                                                           maxlength="60"
+                                                                           placeholder="Ej. VIP"
+                                                                           required
+                                                                           th:classappend="${#fields.hasErrors('tiposEntrada[' + itemStat.index + '].nombre')} ? ' is-invalid'">
+                                                                </label>
+                                                                <div class="invalid-feedback"
+                                                                     th:if="${#fields.hasErrors('tiposEntrada[' + itemStat.index + '].nombre')}"
+                                                                     th:errors="*{tiposEntrada[__${itemStat.index}__].nombre}"></div>
+                                                            </div>
+
+                                                            <div class="col-6 col-md-3">
+                                                                <label class="form-label">
+                                                                    Precio (₡)
+                                                                    <input class="form-control"
+                                                                           type="number"
+                                                                           data-field="precio"
+                                                                           th:field="*{tiposEntrada[__${itemStat.index}__].precio}"
+                                                                           min="0.01"
+                                                                           step="0.01"
+                                                                           placeholder="42000"
+                                                                           required
+                                                                           th:classappend="${#fields.hasErrors('tiposEntrada[' + itemStat.index + '].precio')} ? ' is-invalid'">
+                                                                </label>
+                                                                <div class="invalid-feedback"
+                                                                     th:if="${#fields.hasErrors('tiposEntrada[' + itemStat.index + '].precio')}"
+                                                                     th:errors="*{tiposEntrada[__${itemStat.index}__].precio}"></div>
+                                                            </div>
+
+                                                            <div class="col-6 col-md-3">
+                                                                <label class="form-label">
+                                                                    Unidades disponibles
+                                                                    <input class="form-control"
+                                                                           type="number"
+                                                                           data-field="cantidad"
+                                                                           th:field="*{tiposEntrada[__${itemStat.index}__].cantidad}"
+                                                                           min="1"
+                                                                           step="1"
+                                                                           placeholder="300"
+                                                                           required
+                                                                           th:classappend="${#fields.hasErrors('tiposEntrada[' + itemStat.index + '].cantidad')} ? ' is-invalid'">
+                                                                </label>
+                                                                <div class="invalid-feedback"
+                                                                     th:if="${#fields.hasErrors('tiposEntrada[' + itemStat.index + '].cantidad')}"
+                                                                     th:errors="*{tiposEntrada[__${itemStat.index}__].cantidad}"></div>
+                                                            </div>
+
+                                                            <div class="col-12 col-md-2">
+                                                                <button class="btn btn-outline-danger w-100"
+                                                                        type="button"
+                                                                        data-remove-ticket>
+                                                                    Quitar
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <button class="btn btn-outline-primary"
+                                                        type="button"
+                                                        id="addTicket">
+                                                    + Agregar categoría
+                                                </button>
+
+                                                <template id="ticketRowTemplate">
+                                                    <div class="evento-ticket-row border rounded-3 p-3 mb-3" data-ticket-row>
+                                                        <div class="row g-3 align-items-end">
+                                                            <div class="col-12 col-md-4">
+                                                                <label class="form-label">
+                                                                    Categoría
+                                                                    <input class="form-control"
+                                                                           type="text"
+                                                                           data-field="nombre"
+                                                                           maxlength="60"
+                                                                           placeholder="Ej. General"
+                                                                           required>
+                                                                </label>
+                                                            </div>
+
+                                                            <div class="col-6 col-md-3">
+                                                                <label class="form-label">
+                                                                    Precio (₡)
+                                                                    <input class="form-control"
+                                                                           type="number"
+                                                                           data-field="precio"
+                                                                           min="0.01"
+                                                                           step="0.01"
+                                                                           placeholder="24000"
+                                                                           required>
+                                                                </label>
+                                                            </div>
+
+                                                            <div class="col-6 col-md-3">
+                                                                <label class="form-label">
+                                                                    Unidades disponibles
+                                                                    <input class="form-control"
+                                                                           type="number"
+                                                                           data-field="cantidad"
+                                                                           min="1"
+                                                                           step="1"
+                                                                           placeholder="900"
+                                                                           required>
+                                                                </label>
+                                                            </div>
+
+                                                            <div class="col-12 col-md-2">
+                                                                <button class="btn btn-outline-danger w-100"
+                                                                        type="button"
+                                                                        data-remove-ticket>
+                                                                    Quitar
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </template>
+                                            </section>    
+                                        </div>
+
+                                        <div class="row g-3">
+                                            <div class="col-12 col-md-6">
+                                                <label for="categoriaId" class="form-label">
+                                                    Categoría
+                                                </label>
+                                                <select id="categoriaId"
+                                                        class="form-select form-select-lg"
+                                                        th:field="*{categoriaId}"
+                                                        required
+                                                        th:classappend="${#fields.hasErrors('categoriaId')} ? ' is-invalid'">
+                                                    <option value="">Selecciona una categoría</option>
+                                                    <option th:each="categoria : ${categorias}"
+                                                            th:value="${categoria.id}"
+                                                            th:text="${categoria.nombre}">
+                                                        Música
+                                                    </option>
+                                                </select>
+                                                <div class="invalid-feedback"
+                                                     th:if="${#fields.hasErrors('categoriaId')}"
+                                                     th:errors="*{categoriaId}"></div>
+                                            </div>
+
+                                            <div class="col-12 col-md-6">
+                                                <label for="aforo" class="form-label">Aforo del venue</label>
+                                                <input id="aforo"
+                                                       class="form-control form-control-lg"
+                                                       type="text"
+                                                       value="Selecciona un venue"
+                                                       readonly>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </section>
+
+                        <aside class="col-12 col-xl-4">
+                            <div class="card evento-publicacion-card h-100">
+                                <div class="card-body p-4 d-flex flex-column">
+                                    <h2 class="h4 mb-3">Publicación</h2>
+                                    <p class="text-secondary">
+                                        Revisa los datos antes de guardar el evento.
+                                    </p>
+
+                                    <hr>
+
+                                    <h3 class="h6">Estado</h3>
+                                    <span class="badge rounded-pill text-bg-warning align-self-start px-3 py-2">
+                                        Borrador
+                                    </span>
+
+                                    <p class="small text-secondary mt-3">
+                                        El evento quedará guardado y no aparecerá todavía en el catálogo.
+                                    </p>
+
+                                    <div class="mt-auto pt-4">
+                                        <button class="btn btn-primary btn-lg w-100"
+                                                type="submit"
+                                                form="eventoForm">
+                                            Guardar borrador
+                                        </button>
+                                        <a class="btn btn-link w-100 mt-2"
+                                           th:href="@{/eventos}">
+                                            Cancelar
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </aside>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <script th:src="@{/js/modulos/crear-evento.js}"></script>
+    </body>
+</html>
