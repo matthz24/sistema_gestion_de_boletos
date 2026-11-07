@@ -9,4 +9,9 @@ public class InicioController {
     public String inicio() {
         return "index";
     }
+    
+    @GetMapping("/acceso_denegado")
+    public String accesoDenegado() {
+        return "acceso_denegado";   // resuelve templates/acceso_denegado.html
+    }
 }

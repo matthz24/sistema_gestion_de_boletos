@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head th:replace="~{general/fragmentos :: head('Acceso denegado | EvenTicket')}"></head>
+    <body>
+        <main class="inicio-layout">
+            <a th:replace="~{general/fragmentos :: marca('')}"></a>
+            <span class="etiqueta-superior">ERROR 403</span>
+            <h1>Acceso denegado</h1>
+            <p>Tu cuenta no tiene permisos para entrar en esta sección de EvenTicket.
+               Si crees que esto es un error, solicita el rol correspondiente o
+               contacta con un administrador.</p>
+
+            <div class="aviso aviso-error">
+                Sección reservada: vuelve atrás o elige una de las opciones.
+            </div>
+
+            <div class="inicio-acciones">
+                <a class="boton boton-principal" th:href="@{/eventos}">Explorar eventos</a>
+                <a class="boton boton-secundario" th:href="@{/}">Volver al inicio</a>
+                <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post"
+                      style="display:inline;">
+                    <button class="boton boton-secundario" type="submit">Cerrar sesión</button>
+                </form>
+            </div>
+        </main>
+    </body>
+</html>

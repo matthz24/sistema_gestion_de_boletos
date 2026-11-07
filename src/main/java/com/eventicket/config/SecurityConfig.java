@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 /**
  *
@@ -19,12 +20,12 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -33,10 +34,11 @@ public class SecurityConfig {
                                 "/css/**", "/js/**", "/img/**", "/webjars/**",
                                 "/favicon.ico", "/error").permitAll()
                         .requestMatchers("/login", "/auth/**").permitAll()
+                        .requestMatchers("/acceso_denegado").permitAll()
                         .requestMatchers("/organizador/solicitud").permitAll()
                         .requestMatchers("/admin/organizadores/**", "/admin/venues/**")
                         .hasRole("ADMINISTRADOR")
-                        .requestMatchers("/organizador/eventos/**").hasRole("ORGANIZADOR")
+                        .requestMatchers("/organizador/eventos/**").hasAnyRole("ORGANIZADOR", "ADMINISTRADOR")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
@@ -49,9 +51,25 @@ public class SecurityConfig {
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login?logout")
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
                         .permitAll()
+                )
+                .exceptionHandling(exceptions -> exceptions // NUEVO
+                        .accessDeniedPage("/acceso_denegado")
+                )
+                .sessionManagement(session -> session
+                        .maximumSessions(1)
+                        .maxSessionsPreventsLogin(false)
                 );
-        
+
         return http.build();
+    }
+    
+
+    // ESTO ES PARA MANTENER ACTUALIZADO QUE SIEMPRE SEA 1 INICIO DE SESIÓN
+    @Bean
+    public HttpSessionEventPublisher httpSessionEventPublisher() {
+        return new HttpSessionEventPublisher();
     }
 }

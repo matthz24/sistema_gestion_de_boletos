@@ -37,6 +37,33 @@ h1, h2, h3, p { margin: 0; }
 .cat-nav-links a.activo { color: var(--morado); font-weight: 600; }
 .cat-nav-acciones { justify-self: end; display: flex; gap: 12px; }
 
+.cat-usuario {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 12px 5px 6px;
+  border: 1px solid #dcdfeb;
+  border-radius: 999px;
+  background: #f6f6fc;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--texto);
+}
+.cat-usuario-avatar {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--morado);   
+  color: #fff;
+}
+.cat-usuario-nombre {
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;        
+}
 .cat-hero { background: var(--lavanda); }
 .cat-hero-contenido { position: relative; padding-top: 80px; padding-bottom: 28px; }
 .cat-badge { display: inline-block; padding: 8px 20px; border-radius: 999px; color: #fff; background: var(--navy); font-size: 10px; font-weight: 700; letter-spacing: .06em; }
@@ -154,7 +181,7 @@ h1, h2, h3, p { margin: 0; }
 }
 @media (max-width: 560px) {
   .cat-grid { grid-template-columns: 1fr; }
-  .cat-nav-acciones .cat-btn-borde { display: none; }
+  .cat-nav-acciones a.cat-btn-borde { display: none; }
 }
 /* Compatibilidad con Bootstrap */
 body {

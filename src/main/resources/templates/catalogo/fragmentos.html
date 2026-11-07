@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
 <!doctype html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <body>
 
     <head th:fragment="head(titulo)">
@@ -15,22 +11,33 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
         <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+        <link rel="stylesheet" th:href="@{/webjars/font-awesome/css/all.css}">
         <link rel="stylesheet" th:href="@{/css/catalogo.css}">
     </head>
 
     <header th:fragment="navPublica" class="cat-nav">
         <div class="cat-container cat-nav-contenido">
             <a th:replace="~{general/fragmentos :: marca('')}"></a>
+
             <nav class="cat-nav-links" aria-label="Navegación principal">
                 <a class="activo" th:href="@{/eventos}">Explorar</a>
                 <a th:href="@{/eventos#filtros}">Categorías</a>
                 <a th:href="@{/eventos}">Ayuda</a>
             </nav>
-            <div class="cat-nav-acciones" th:if="${!logueado}">
+
+            <!-- Visitante -->
+            <div class="cat-nav-acciones" sec:authorize="!isAuthenticated()">
                 <a class="cat-btn cat-btn-borde cat-btn-chico" th:href="@{/login}">Iniciar sesión</a>
                 <a class="cat-btn cat-btn-principal cat-btn-chico" th:href="@{/auth/registro}">Registrarse</a>
             </div>
-            <form class="cat-nav-acciones" th:if="${logueado}" th:action="@{/logout}" method="post">
+
+            <!-- Sesión iniciada -->
+            <form class="cat-nav-acciones" sec:authorize="isAuthenticated()"
+                  th:action="@{/logout}" method="post">
+                <span class="cat-usuario">
+                    <i class="fas fa-user cat-usuario-avatar"></i>
+                    <span class="cat-usuario-nombre" sec:authentication="name">usuario</span>
+                </span>
                 <button class="cat-btn cat-btn-borde cat-btn-chico" type="submit">Cerrar sesión</button>
             </form>
         </div>
